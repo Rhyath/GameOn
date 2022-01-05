@@ -227,7 +227,7 @@ input {
   border: 2px solid #e54858;
 }
 
-.error-message {
+.error-message { /* this was input[data-error] - to match html: <input data-error:"Message goes here">???? 
    /* content: attr(data-error); */
     font-size: 0.4em;
     color: red;

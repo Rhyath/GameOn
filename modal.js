@@ -38,11 +38,15 @@ function closeModal() {
 function validate (){
   form.addEventListener('submit', ($event) => {
     //prevent form reset -- $event.preventDefault(); -- doesn't work here, but it works when directly inline on html
+    
+    //clear last error message 
+    clearLastMessage();
 
     //check validation
     checkingInputs();
 
     //display message on succesful submission
+
   });
 }
 
@@ -64,7 +68,7 @@ function checkingInputs() {
   }
 */
 
-  //FIRST NAME CHECK
+  //FIRST NAME CHECK - error message does not change - stuck to first <p> element created due to clear last message function
   if(firstName == '' || firstName == null){
       //add error class
       formData[0].setAttribute('data-error-visible', 'true');
@@ -87,10 +91,39 @@ function checkingInputs() {
     // console.log(firstName); -- TESTING
     return firstName;
   }
+
+    //LAST NAME CHECK
+    if(lastName == '' || lastName == null){
+      //add error class
+      formData[1].setAttribute('data-error-visible', 'true');
+      inputData[1].setAttribute('data-error-visible', 'true');
+      //add & show error message
+      let errorText = document.createElement('p');
+      errorText.textContent = 'Please provide your last name';
+      errorText.setAttribute('class', 'error-message');
+      formData[1].appendChild(errorText);
+  } else  if(lastName.length < 2){
+    //add error class
+    formData[1].setAttribute('data-error-visible', 'true');
+    inputData[1].setAttribute('data-error-visible', 'true');
+    //add & show error message
+    let errorText = document.createElement('p');
+    errorText.textContent = 'Please make sure you have typed your last name correctly';
+    errorText.setAttribute('class', 'error-message');
+    formData[1].appendChild(errorText);
+  } else {
+    // console.log(firstName); -- TESTING
+    return lastName;
+  }
+
 }
 
+//keeps only 1 line of error message in display per data div
 function clearLastMessage() {
-  if(formData.childElementCount > 4){
-    formData.removeChild(formData.children[formData.childElementCount-1]);
+  for(var i=0; i<formData.length; i++){
+    let errorMessageInPlace = formData[i].childElementCount;
+    if(errorMessageInPlace > 4) {
+      formData[i].removeChild(formData[i].lastChild);
+    }
   }
 }

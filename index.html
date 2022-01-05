@@ -64,7 +64,7 @@
               onsubmit="event.preventDefault(); return validate();"
             >
               <div
-                class="formData">
+                class="formData textfield" >
                 <label for="first">First Name</label><br>
                 <input
                   class="text-control"
@@ -77,12 +77,13 @@
               <div
                 class="formData">
                 <label for="last">Last Name</label><br>
+                <!--inside the input, add attribute data-error="Data error message goes here"-->
                 <input
                   class="text-control"
                   type="text"
                   id="last"
                   name="last"
-                  minlength="2"
+                  minlength="2" 
                 /><br>
               </div>
               <div
