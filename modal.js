@@ -75,22 +75,21 @@ function checkingInputs() {
       formData[0].setAttribute('data-error-visible', 'true');
       inputData[0].setAttribute('data-error-visible', 'true');
       //add & show error message
-        let errorText = document.createElement('p');
-        errorText.textContent = 'Please provide your first name!';
-        errorText.setAttribute('class', 'error-message');
-        formData[0].appendChild(errorText);
+      let errorText = document.createElement('p');
+      errorText.textContent = 'Please provide your first name!';  
+      errorText.setAttribute('class', 'error-message');
+      formData[0].appendChild(errorText);
   } else  if(firstName.length < 2){
-    //add error class
-    formData[0].setAttribute('data-error-visible', 'true');
-    inputData[0].setAttribute('data-error-visible', 'true');
-    //add & show error message
-    let errorText = document.createElement('p');
-    errorText.textContent = 'Please make sure you have typed your first name correctly';
-    errorText.setAttribute('class', 'error-message');
-    formData[0].appendChild(errorText);
+      //add error class
+      formData[0].setAttribute('data-error-visible', 'true');
+      inputData[0].setAttribute('data-error-visible', 'true');
+      //add & show error message
+      let errorText = document.createElement('p');
+      errorText.textContent = 'Please make sure you have typed your first name correctly';
+      errorText.setAttribute('class', 'error-message');
+      formData[0].appendChild(errorText);
   } else {
-    // console.log(firstName); -- TESTING
-    return firstName;
+      return firstName;
   }
 
     //LAST NAME CHECK
@@ -104,21 +103,20 @@ function checkingInputs() {
       errorText.setAttribute('class', 'error-message');
       formData[1].appendChild(errorText);
   } else  if(lastName.length < 2){
-    //add error class
-    formData[1].setAttribute('data-error-visible', 'true');
-    inputData[1].setAttribute('data-error-visible', 'true');
-    //add & show error message
-    let errorText = document.createElement('p');
-    errorText.textContent = 'Please make sure you have typed your last name correctly';
-    errorText.setAttribute('class', 'error-message');
-    formData[1].appendChild(errorText);
+      //add error class
+      formData[1].setAttribute('data-error-visible', 'true');
+      inputData[1].setAttribute('data-error-visible', 'true');
+      //add & show error message
+      let errorText = document.createElement('p');
+      errorText.textContent = 'Please make sure you have typed your last name correctly';
+      errorText.setAttribute('class', 'error-message');
+      formData[1].appendChild(errorText);
   } else {
-    // console.log(firstName); -- TESTING
-    return lastName;
+      return lastName;
   }
 
-      //EMAIL CHECK
-      if(email == '' || email == null){
+    //EMAIL CHECK
+    if(email == '' || email == null){
         //add error class
         formData[2].setAttribute('data-error-visible', 'true');
         inputData[2].setAttribute('data-error-visible', 'true');
@@ -128,18 +126,54 @@ function checkingInputs() {
         errorText.setAttribute('class', 'error-message');
         formData[2].appendChild(errorText);
     } else  if(email.pattern !== '[a-z0-9._%+-]+\@[a-z0-9.-]+\.[a-z]{2,4}$'){
+        //add error class
+        formData[2].setAttribute('data-error-visible', 'true');
+        inputData[2].setAttribute('data-error-visible', 'true');
+        //add & show error message
+        let errorText = document.createElement('p');
+        errorText.textContent = 'Please make sure you have typed your email correctly';
+        errorText.setAttribute('class', 'error-message');
+        formData[2].appendChild(errorText);
+    } else {
+        return email;
+    }
+
+  //BIRTHDATE CHECK
+  if(birthDate == '' || birthDate == null){
       //add error class
-      formData[2].setAttribute('data-error-visible', 'true');
-      inputData[2].setAttribute('data-error-visible', 'true');
+      formData[3].setAttribute('data-error-visible', 'true');
+      inputData[3].setAttribute('data-error-visible', 'true');
       //add & show error message
       let errorText = document.createElement('p');
-      errorText.textContent = 'Please make sure you have typed your email correctly';
+      errorText.textContent = 'Please provide your date of birth';
       errorText.setAttribute('class', 'error-message');
-      formData[2].appendChild(errorText);
-    } else {
-      // console.log(firstName); -- TESTING
+      formData[3].appendChild(errorText);
+  } else {
       return email;
     }
+
+   //TOURNAMENTS CHECK
+   if(noOfTournaments == '' || noOfTournaments == null){
+    //add error class
+    formData[4].setAttribute('data-error-visible', 'true');
+    inputData[4].setAttribute('data-error-visible', 'true');
+    //add & show error message
+    let errorText = document.createElement('p');
+    errorText.textContent = 'Please let us know how many tournaments you have attended in the past';
+    errorText.setAttribute('class', 'error-message');
+    formData[4].appendChild(errorText);
+  } else  if(noOfTournaments < 0 ){
+    //add error class
+    formData[4].setAttribute('data-error-visible', 'true');
+    inputData[4].setAttribute('data-error-visible', 'true');
+    //add & show error message
+    let errorText = document.createElement('p');
+    errorText.textContent = 'If you have not attended any tournaments before, please type 0';
+    errorText.setAttribute('class', 'error-message');
+    formData[4].appendChild(errorText);
+  } else {
+      return noOfTournaments;
+  }
 
 }
 
