@@ -38,9 +38,9 @@ function closeModal() {
 function validate (){
   form.addEventListener('submit', ($event) => {
     //prevent form reset -- $event.preventDefault(); -- doesn't work here, but it works when directly inline on html
-    
-    //clear last error message 
-    clearLastMessage();
+
+      //clear last error message 
+  clearLastMessage();
 
     //check validation
     checkingInputs();
@@ -69,15 +69,16 @@ function checkingInputs() {
 */
 
   //FIRST NAME CHECK - error message does not change - stuck to first <p> element created due to clear last message function
+  
   if(firstName == '' || firstName == null){
       //add error class
       formData[0].setAttribute('data-error-visible', 'true');
       inputData[0].setAttribute('data-error-visible', 'true');
       //add & show error message
-      let errorText = document.createElement('p');
-      errorText.textContent = 'Please provide your first name';
-      errorText.setAttribute('class', 'error-message');
-      formData[0].appendChild(errorText);
+        let errorText = document.createElement('p');
+        errorText.textContent = 'Please provide your first name!';
+        errorText.setAttribute('class', 'error-message');
+        formData[0].appendChild(errorText);
   } else  if(firstName.length < 2){
     //add error class
     formData[0].setAttribute('data-error-visible', 'true');
@@ -116,14 +117,39 @@ function checkingInputs() {
     return lastName;
   }
 
+      //EMAIL CHECK
+      if(email == '' || email == null){
+        //add error class
+        formData[2].setAttribute('data-error-visible', 'true');
+        inputData[2].setAttribute('data-error-visible', 'true');
+        //add & show error message
+        let errorText = document.createElement('p');
+        errorText.textContent = 'Please provide your email address';
+        errorText.setAttribute('class', 'error-message');
+        formData[2].appendChild(errorText);
+    } else  if(email.pattern !== '[a-z0-9._%+-]+\@[a-z0-9.-]+\.[a-z]{2,4}$'){
+      //add error class
+      formData[2].setAttribute('data-error-visible', 'true');
+      inputData[2].setAttribute('data-error-visible', 'true');
+      //add & show error message
+      let errorText = document.createElement('p');
+      errorText.textContent = 'Please make sure you have typed your email correctly';
+      errorText.setAttribute('class', 'error-message');
+      formData[2].appendChild(errorText);
+    } else {
+      // console.log(firstName); -- TESTING
+      return email;
+    }
+
 }
 
 //keeps only 1 line of error message in display per data div
 function clearLastMessage() {
-  for(var i=0; i<formData.length; i++){
-    let errorMessageInPlace = formData[i].childElementCount;
+  let textfield = document.querySelectorAll(".textfield");
+  for(var i=0; i<textfield.length; i++){
+    let errorMessageInPlace = textfield[i].childElementCount;
     if(errorMessageInPlace > 4) {
-      formData[i].removeChild(formData[i].lastChild);
+      textfield[i].removeChild(textfield[i].lastChild);
     }
   }
 }
