@@ -58,15 +58,15 @@ function checkingInputs() {
   const email = inputData[2].value;
   const birthDate = inputData[3].value;
   const noOfTournaments = inputData[4].value;
-  /*
-  const cityRadioBtn = document.getElementsByName("location");
-
-  for(i=0; i<cityRadioBtn.length; i++) {
-    cityRadioBtn[i].addEventListener('change', ($event) => {
-      const preferedCity = $event.target.value;
-    });
-  }
-*/
+  const locationBtn = document.getElementsByName("location");
+    /* //location value from radio button iteration
+    for(let i=0; i<locationBtn.length; i++){
+      locationBtn[i].addEventListener('change', ($event) => {
+        const location = $event.target.value;
+      });
+    console.log(location);
+    }
+    */
 
   //FIRST NAME CHECK - error message does not change - stuck to first <p> element created due to clear last message function
   
@@ -174,6 +174,43 @@ function checkingInputs() {
   } else {
       return noOfTournaments;
   }
+
+  // LOCATION CHECK
+
+  let locationSelected = false;
+  let existingErrorText = document.getElementById('locationBtn-error-message');
+  //iteration of radio buttons for a selection
+  for(let i=0; i<locationBtn.length; i++){
+    locationBtn[i].addEventListener('change',($event)=>{
+      let location = $event.target.value;
+    });
+      //checking if radio button is selected
+    if(locationBtn[i].checked){
+      locationSelected = true;
+      break;
+    }
+  }
+  //if radio button not selected
+  if(locationSelected == false){
+     //add eror class
+    formData[5].setAttribute('data-error-visible', 'true'); 
+    //check if error message element exists & amend message
+    if(formData[5].contains(existingErrorText)){
+      existingErrorText.textContent = 'Please select a preferred location!';
+     } else {
+        // or if does not exist, add & show error message
+        let errorText = document.createElement('p');
+        errorText.textContent = 'Please select a preferred location';
+        errorText.setAttribute('class', 'error-message');
+        errorText.setAttribute('id', 'locationBtn-error-message');
+        formData[5].appendChild(errorText);
+     } 
+   } //if radio button gets selected after prompt, remove error message
+    else if(locationSelected == true && formData[5].contains(existingErrorText)){
+        formData[5].removeChild(existingErrorText);
+   } else {
+       return location;
+     }
 
 }
 
