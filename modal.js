@@ -5,7 +5,7 @@ function editNav() {
   } else {
     x.className = "topnav";
   }
-}
+} 
 
 // DOM Elements
 const modalbg = document.querySelector(".bground");
@@ -59,14 +59,7 @@ function checkingInputs() {
   const birthDate = inputData[3].value;
   const noOfTournaments = inputData[4].value;
   const locationBtn = document.getElementsByName("location");
-    /* //location value from radio button iteration
-    for(let i=0; i<locationBtn.length; i++){
-      locationBtn[i].addEventListener('change', ($event) => {
-        const location = $event.target.value;
-      });
-    console.log(location);
-    }
-    */
+  const TandCs = document.getElementById("checkbox1");
 
   //FIRST NAME CHECK - error message does not change - stuck to first <p> element created due to clear last message function
   
@@ -176,7 +169,6 @@ function checkingInputs() {
   }
 
   // LOCATION CHECK
-
   let locationSelected = false;
   let existingErrorText = document.getElementById('locationBtn-error-message');
   //iteration of radio buttons for a selection
@@ -212,6 +204,25 @@ function checkingInputs() {
        return location;
      }
 
+  //T&C CHECK
+    if(TandCs.checked == false){
+      let checkboxLabel = document.querySelector('[for="checkbox1"]');
+      //clear previous message
+        let existingErrorMessage = checkboxLabel.childElementCount;
+        if(existingErrorMessage > 1) {
+          checkboxLabel.removeChild(checkboxLabel.lastChild);
+        }
+      //add error styling
+      let checkboxIcon = document.querySelector('[for="checkbox1"] span');
+      checkboxIcon.style.border = '1px solid red'; 
+      //add error message
+      let errorText = document.createElement('p');
+      errorText.textContent = 'You must accept GameOn\'s terms and conditions to continue';
+      errorText.setAttribute('class', 'error-message');
+      errorText.style.fontSize = '0.8em';
+     checkboxLabel.appendChild(errorText);
+    }
+
 }
 
 //keeps only 1 line of error message in display per data div
@@ -224,3 +235,11 @@ function clearLastMessage() {
     }
   }
 }
+
+/*
+//succesful submission message
+function Success(){
+  form.style.display = 'none';
+
+}
+*?
