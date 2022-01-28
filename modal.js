@@ -7,7 +7,7 @@ function editNav() {
   }
 } 
 
-// DOM Elements & required variables
+// DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeBtn = document.querySelectorAll(".close");
@@ -15,9 +15,7 @@ const form = document.querySelector("form");
 const formData = document.querySelectorAll(".formData"); 
 const inputData = document.getElementsByClassName("text-control");
 const submitBtn = document.querySelectorAll(".btn-submit");
-let errorCounter = 0;
-let allChecksPassed = false;
-//const checkFailed == true;
+let allValidated = true;
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
@@ -42,25 +40,19 @@ function validate (){
   form.addEventListener('submit', ($event) => {
     //prevent form reset -- $event.preventDefault(); -- doesn't work here, but it works when directly inline on html
 
-  while(allChecksPassed == false) {
-  //clear last error message (textfields) 
-  clearLastMessage();
-
-   //check validation
-  checkingInputs();
-  }
-  //on succesful submission
-  SuccessMsg();
-  
-/*  if(checkingInputs()){
-    if(checkFailed == false){
-    Success();
+    //check validation
+    checkingInputs();
+    
+    //check validation complete & display message on succesful submission
+    if(allValidated == true){
+      SuccessMsg();
     } else {
-      alert('One of the checks has failed');
-    }
-  }
-*/
+      // return validation variable to initial state
+      allValidated = true; 
+      }
+      
   });
+
 }
 
 
@@ -73,122 +65,122 @@ function checkingInputs() {
   const noOfTournaments = inputData[4].value;
   const locationBtn = document.getElementsByName("location");
   const TandCs = document.getElementById("checkbox1");
-  errorCounter = 0;
+
+
+  //clear last error message for textfield inputs
+  clearLastMessage();
 
   //FIRST NAME CHECK - error message does not change - stuck to first <p> element created due to clear last message function
   
   if(firstName == '' || firstName == null){
-      //add error class & counter
+      //add error class
       formData[0].setAttribute('data-error-visible', 'true');
-      inputData[0].setAttribute('data-error-visible', 'true');
-      errorCounter++;
+      allValidated = false;
       //add & show error message
       let errorText = document.createElement('p');
       errorText.textContent = 'Please provide your first name!';  
       errorText.setAttribute('class', 'error-message');
       formData[0].appendChild(errorText);
   } else  if(firstName.length < 2){
-      //add error class & counter
+      //add error class
       formData[0].setAttribute('data-error-visible', 'true');
-      inputData[0].setAttribute('data-error-visible', 'true');
-      errorCounter++;
+      allValidated = false;
       //add & show error message
       let errorText = document.createElement('p');
       errorText.textContent = 'Please make sure you have typed your first name correctly';
       errorText.setAttribute('class', 'error-message');
       formData[0].appendChild(errorText);
   } else {
-      return firstName;
+      formData[0].removeAttribute('data-error-visible');
+      console.log('First Name: ' + firstName);
   }
 
     //LAST NAME CHECK
     if(lastName == '' || lastName == null){
-      //add error class & counter
+      //add error class
       formData[1].setAttribute('data-error-visible', 'true');
-      inputData[1].setAttribute('data-error-visible', 'true');
-      errorCounter++;
+      allValidated = false;
       //add & show error message
       let errorText = document.createElement('p');
       errorText.textContent = 'Please provide your last name';
       errorText.setAttribute('class', 'error-message');
       formData[1].appendChild(errorText);
   } else  if(lastName.length < 2){
-      //add error class & counter
+      //add error class
       formData[1].setAttribute('data-error-visible', 'true');
-      inputData[1].setAttribute('data-error-visible', 'true');
-      errorCounter++;
+      allValidated = false;
       //add & show error message
       let errorText = document.createElement('p');
       errorText.textContent = 'Please make sure you have typed your last name correctly';
       errorText.setAttribute('class', 'error-message');
       formData[1].appendChild(errorText);
   } else {
-      return lastName;
+      formData[1].removeAttribute('data-error-visible');
+      console.log('Last Name: ' + lastName);
   }
 
     //EMAIL CHECK
+    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if(email == '' || email == null){
-        //add error class & counter
+        //add error class
         formData[2].setAttribute('data-error-visible', 'true');
-        inputData[2].setAttribute('data-error-visible', 'true');
-        errorCounter++;
+        allValidated = false;
         //add & show error message
         let errorText = document.createElement('p');
         errorText.textContent = 'Please provide your email address';
         errorText.setAttribute('class', 'error-message');
         formData[2].appendChild(errorText);
-    } else  if(email.pattern !== '[a-z0-9._%+-]+\@[a-z0-9.-]+\.[a-z]{2,4}$'){
-        //add error class & counter
+    } else  if(!email.match(regex)){
+        //add error class
         formData[2].setAttribute('data-error-visible', 'true');
-        inputData[2].setAttribute('data-error-visible', 'true');
-        errorCounter++;
+        allValidated = false;
         //add & show error message
         let errorText = document.createElement('p');
         errorText.textContent = 'Please make sure you have typed your email correctly';
         errorText.setAttribute('class', 'error-message');
         formData[2].appendChild(errorText);
     } else {
-        return email;
+        formData[2].removeAttribute('data-error-visible');
+        console.log('Email: '+ email);
     }
 
   //BIRTHDATE CHECK
   if(birthDate == '' || birthDate == null){
-      //add error class & counter
+      //add error class
       formData[3].setAttribute('data-error-visible', 'true');
-      inputData[3].setAttribute('data-error-visible', 'true');
-      errorCounter++;
+      allValidated = false;
       //add & show error message
       let errorText = document.createElement('p');
       errorText.textContent = 'Please provide your date of birth';
       errorText.setAttribute('class', 'error-message');
       formData[3].appendChild(errorText);
   } else {
-      return email;
+      formData[3].removeAttribute('data-error-visible');
+      console.log('Birth date: '+ birthDate);
     }
 
    //TOURNAMENTS CHECK
    if(noOfTournaments == '' || noOfTournaments == null){
-    //add error class & counter
+    //add error class
     formData[4].setAttribute('data-error-visible', 'true');
-    inputData[4].setAttribute('data-error-visible', 'true');
-    errorCounter++;
+    allValidated = false;
     //add & show error message
     let errorText = document.createElement('p');
     errorText.textContent = 'Please let us know how many tournaments you have attended in the past';
     errorText.setAttribute('class', 'error-message');
     formData[4].appendChild(errorText);
   } else  if(noOfTournaments < 0 ){
-    //add error class & counter
+    //add error class
     formData[4].setAttribute('data-error-visible', 'true');
-    inputData[4].setAttribute('data-error-visible', 'true');
-    errorCounter++;
+    allValidated = false;
     //add & show error message
     let errorText = document.createElement('p');
     errorText.textContent = 'If you have not attended any tournaments before, please type 0';
     errorText.setAttribute('class', 'error-message');
     formData[4].appendChild(errorText);
   } else {
-      return noOfTournaments;
+      formData[4].removeAttribute('data-error-visible');
+      console.log('Tournaments attended: '+ noOfTournaments);
   }
 
   // LOCATION CHECK
@@ -207,9 +199,9 @@ function checkingInputs() {
   }
   //if radio button not selected
   if(locationSelected == false){
-     //add eror class & counter
+     //add eror class
     formData[5].setAttribute('data-error-visible', 'true'); 
-    errorCounter++;
+    allValidated = false;
     //check if error message element exists & amend message
     if(formData[5].contains(existingErrorText)){
       existingErrorText.textContent = 'Please select a preferred location!';
@@ -225,7 +217,7 @@ function checkingInputs() {
     else if(locationSelected == true && formData[5].contains(existingErrorText)){
         formData[5].removeChild(existingErrorText);
    } else {
-       return location;
+       console.log('Prefered location for next tournament: '+ location);
      }
 
   //T&C CHECK
@@ -236,10 +228,10 @@ function checkingInputs() {
         if(existingErrorMessage > 1) {
           checkboxLabel.removeChild(checkboxLabel.lastChild);
         }
-      //add error styling & counter
+      //add error styling
       let checkboxIcon = document.querySelector('[for="checkbox1"] span');
       checkboxIcon.style.border = '1px solid red'; 
-      errorCounter++;
+      allValidated = false;
       //add error message
       let errorText = document.createElement('p');
       errorText.textContent = 'You must accept GameOn\'s terms and conditions to continue';
@@ -247,16 +239,12 @@ function checkingInputs() {
       errorText.style.fontSize = '0.8em';
      checkboxLabel.appendChild(errorText);
     } else {
-      return TandCs.checked;
+        console.log('Terms & Conditions accepted');
     }
-
-  console.log(errorCounter);
-  if(errorCounter == 0){
-    allChecksPassed = true;
-  } 
+  
 }
 
-//keeps only 1 line of error message in display per textfield data div
+//keeps only 1 line of error message in display per data div
 function clearLastMessage() {
   let textfield = document.querySelectorAll(".textfield");
   for(var i=0; i<textfield.length; i++){
@@ -264,29 +252,28 @@ function clearLastMessage() {
     if(errorMessageInPlace > 4) {
       textfield[i].removeChild(textfield[i].lastChild);
     }
+     
   }
 }
 
-//checking Success for completing submission message
-//function checkSuccess(){
-//  if(errorCounter > 0){
-//    alert('Fix the errors');
-//  } else {
-//    SuccessMsg();
-//  }
-//}
-
-//display submission message
+///display submission message
 function SuccessMsg(){
   //remove form fields
   form.style.display = 'none';
-  //create and display success message
-  let modalBody = document.querySelector('.modal-body');
-  let successMessage = document.createElement('p');
-  successMessage.textContent = 'You have signed up succesfully to our next gaming event';
-  successMessage.setAttribute('class', 'hero-text');
-  successMessage.style.width = '18em';
-  successMessage.style.textAlign = 'center';
-  modalBody.appendChild(successMessage);
+  //create and display success message of it doesnt exist yet
+  if(!document.querySelector('p .hero-text')){
+    let modalBody = document.querySelector('.modal-body');
+    let successMessage = document.createElement('p');
+    successMessage.textContent = 'You have signed up succesfully to our next gaming event';
+    successMessage.setAttribute('class', 'hero-text');
+    successMessage.style.width = '18em';
+    successMessage.style.textAlign = 'center';
+    modalBody.appendChild(successMessage);
+  } else {
+    //remove all other message but 1
+    while(modalBody.children.length > 1){
+    modalBody.removeChild(modalBody.lastChild);
+    }
+  }
 }
 
