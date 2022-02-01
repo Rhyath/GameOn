@@ -7,7 +7,7 @@ function editNav() {
   }
 } 
 
-// DOM Elements & other variables
+// DOM Elements 
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
 const closeBtn = document.querySelectorAll(".close");
@@ -15,6 +15,7 @@ const form = document.querySelector("form");
 const formData = document.querySelectorAll(".formData"); 
 const inputData = document.getElementsByClassName("text-control");
 const submitBtn = document.querySelectorAll(".btn-submit");
+// global variables
 let allValidated = true;
 
 // launch modal event
@@ -33,15 +34,16 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-//validation function
+// validation function
 function validate (){
   form.addEventListener('submit', ($event) => {
-    //prevent form reset -- $event.preventDefault(); -- doesn't work here, but it works when directly inline on html
+    // prevent form reset 
+    $event.preventDefault();
 
-    //check validation
+    // check validation
     checkingInputs();
     
-    //check validation complete & display message on succesful submission
+    // check validation complete & display message on succesful submission
     if(allValidated == true){
       SuccessMsg();
     } else {
@@ -82,7 +84,7 @@ function checkingInputs() {
   } else {
       formData[0].removeAttribute('data-error-visible');
       formData[0].removeAttribute('data-error');
-      console.log('First Name: ' + firstName);
+      //console.log('First Name: ' + firstName);
   }
 
   //LAST NAME CHECK
@@ -103,7 +105,7 @@ function checkingInputs() {
   } else {
       formData[1].removeAttribute('data-error-visible');
       formData[1].removeAttribute('data-error');
-      console.log('Last Name: ' + lastName);
+      //console.log('Last Name: ' + lastName);
   }
 
   //EMAIL CHECK
@@ -125,7 +127,7 @@ function checkingInputs() {
   } else {
       formData[2].removeAttribute('data-error-visible');
       formData[2].removeAttribute('data-error');
-      console.log('Email: '+ email);
+      //console.log('Email: '+ email);
   }
 
   //BIRTHDATE CHECK
@@ -139,7 +141,7 @@ function checkingInputs() {
   } else {
       formData[3].removeAttribute('data-error-visible');
       formData[3].removeAttribute('data-error');
-      console.log('Birth date: '+ birthDate);
+      //console.log('Birth date: '+ birthDate);
     }
 
   //TOURNAMENTS CHECK
@@ -160,7 +162,7 @@ function checkingInputs() {
   } else {
       formData[4].removeAttribute('data-error-visible');
       formData[4].removeAttribute('data-error');
-      console.log('Tournaments attended: '+ noOfTournaments);
+      //console.log('Tournaments attended: '+ noOfTournaments);
   }
 
   // LOCATION CHECK
@@ -187,7 +189,7 @@ function checkingInputs() {
   } else {
       formData[5].removeAttribute('data-error-visible');
       formData[5].removeAttribute('data-error');
-      console.log('Prefered location for next tournament: '+ locationBtn);
+      //console.log('Prefered location for next tournament: '+ locationBtn);
      }
 
   //T&C CHECK
@@ -201,16 +203,15 @@ function checkingInputs() {
   } else {
       formData[6].removeAttribute('data-error-visible');
       formData[6].removeAttribute('data-error');
-      console.log('Terms & Conditions accepted');
+      //console.log('Terms & Conditions accepted');
   }
-
 }
 
 ///display submission message
 function SuccessMsg(){
   //remove form fields
   form.style.display = 'none';
-  //remove previous messages
+  //remove any previous messages
   let modalBody = document.querySelector('.modal-body');
   let existingMessage = modalBody.childElementCount;
   if(existingMessage > 1){
