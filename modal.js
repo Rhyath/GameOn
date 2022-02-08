@@ -36,9 +36,8 @@ function closeModal() {
 
 // validation function
 function validate (){
-  form.addEventListener('submit', ($event) => {
     // prevent form reset 
-    $event.preventDefault();
+    event.preventDefault();
 
     // check validation
     checkingInputs();
@@ -50,11 +49,10 @@ function validate (){
       // return validation variable to initial state
       allValidated = true; 
       }
-      
-  });
-
 }
 
+//calling the function during the submit event
+form.addEventListener('submit', validate);
 
 function checkingInputs() {
   // getting user data 
